@@ -158,12 +158,13 @@ function dotb_colorfultagcloudcallback($matches) {
 // Custom Comments List.
 function dotb_mytheme_comment( $comment, $args, $depth ) {
 	$GLOBALS['comment'] = $comment;
-	if ( $post = get_post($post_id) ) {
+	if ( $post = get_post(get_the_ID()) ) {
                        if ( $comment->user_id === $post->post_author )
                                $bypostauthor = 'by-post-author'; else $bypostauthor = 'by-vistor';
                }
 	switch ( $comment->comment_type ) :
 		case '' :
+		case 'comment':
 	?>
 	<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
 		<div id="comment-<?php comment_ID(); ?>" class="<?php echo $bypostauthor;?>">
@@ -209,7 +210,8 @@ function dotb_mytheme_comment( $comment, $args, $depth ) {
 ?>
 <?php
 class dotb_widget_colorfultagcloud extends WP_Widget {
-    function dotb_widget_colorfultagcloud() {
+    //function dotb_widget_colorfultagcloud() {
+    function __construct() {
         $widget_ops = array('description' => 'Dot-B '.__( 'Display Colorful Tags Cloud', 'dot-b'));
         $this->WP_Widget('dotb_widget_colorfultagcloud', 'Dot-B '.__( 'Colorful Tag Cloud', 'dot-b'), $widget_ops);
     }
